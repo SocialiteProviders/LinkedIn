@@ -17,7 +17,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://www.linkedin.com/uas/oauth2/authorization', $state);
+        return $this->buildAuthUrlFromBase(
+            'https://www.linkedin.com/uas/oauth2/authorization', $state
+        );
     }
 
     /**
@@ -33,7 +35,8 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get('https://api.linkedin.com/v1/people/~:(id,formatted-name,picture-url,email-address)', [
+        $response = $this->getHttpClient()->get(
+            'https://api.linkedin.com/v1/people/~:(id,formatted-name,picture-url,email-address)', [
             'headers' => [
                 'Accept-Language' => 'en-US',
                 'x-li-format'     => 'json',
@@ -50,11 +53,9 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id'       => $user['id'],
-            'nickname' => null,
-            'name'     => $user['formattedName'],
-            'email'    => $user['emailAddress'],
-            'avatar'   => array_get($user, 'pictureUrl'),
+            'id' => $user['id'], 'nickname' => null,
+            'name' => $user['formattedName'], 'email' => $user['emailAddress'],
+            'avatar' => array_get($user, 'pictureUrl'),
         ]);
     }
 
@@ -65,7 +66,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     {
         $response = $this->getHttpClient()->post($this->getTokenUrl(), [
             'headers' => ['Accept' => 'application/json'],
-            'query'   => $this->getTokenFields($code),
+            'query' => $this->getTokenFields($code),
         ]);
 
         return $this->parseAccessToken($response->getBody());
