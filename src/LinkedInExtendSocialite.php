@@ -6,7 +6,9 @@ use SocialiteProviders\Manager\SocialiteWasCalled;
 class LinkedInExtendSocialite
 {
     /**
-     * Execute the provider.
+     * Register the provider.
+     *
+     * @param \SocialiteProviders\Manager\SocialiteWasCalled $socialiteWasCalled
      */
     public function handle(SocialiteWasCalled $socialiteWasCalled)
     {
