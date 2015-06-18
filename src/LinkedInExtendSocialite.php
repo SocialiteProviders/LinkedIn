@@ -1,4 +1,5 @@
 <?php
+
 namespace SocialiteProviders\LinkedIn;
 
 use SocialiteProviders\Manager\SocialiteWasCalled;

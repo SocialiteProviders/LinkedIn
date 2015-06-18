@@ -1,4 +1,5 @@
 <?php
+
 namespace SocialiteProviders\LinkedIn;
 
 use Laravel\Socialite\Two\AbstractProvider;
@@ -39,12 +40,12 @@ class Provider extends AbstractProvider implements ProviderInterface
             'https://api.linkedin.com/v1/people/~:(id,formatted-name,picture-url,email-address)', [
             'headers' => [
                 'Accept-Language' => 'en-US',
-                'x-li-format'     => 'json',
-                'Authorization'   => 'Bearer '.$token,
+                'x-li-format' => 'json',
+                'Authorization' => 'Bearer '.$token,
             ],
         ]);
 
-        return json_decode($response->getBody(), true);
+        return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
@@ -65,8 +66,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     public function getAccessToken($code)
     {
         $response = $this->getHttpClient()->post($this->getTokenUrl(), [
-            'headers' => ['Accept' => 'application/json'],
-            'query' => $this->getTokenFields($code),
+            'form_params' => $this->getTokenFields($code),
         ]);
 
         return $this->parseAccessToken($response->getBody());
