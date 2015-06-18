@@ -8,7 +8,8 @@
     }],
     "require": {
         "php": ">=5.5.0",
-        "socialiteproviders/manager": "~1.0"
+        "socialiteproviders/manager": "~1.0",
+        "guzzlehttp/psr7": "dev-master"
     },
     "autoload": {
         "psr-4": {
