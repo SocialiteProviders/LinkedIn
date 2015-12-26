@@ -28,7 +28,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl()
     {
-        return 'https://www.linkedin.com/uas/oauth2/accessToken?grant_type=authorization_code';
+        return 'https://www.linkedin.com/uas/oauth2/accessToken';
     }
 
     /**
@@ -70,5 +70,17 @@ class Provider extends AbstractProvider implements ProviderInterface
         ]);
 
         return $this->parseAccessToken($response->getBody());
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function getTokenFields($code)
+    {
+        return [
+            'client_id' => $this->clientId, 'client_secret' => $this->clientSecret,
+            'code' => $code, 'redirect_uri' => $this->redirectUrl,
+            'grant_type' => 'authorization_code'
+        ];
     }
 }
