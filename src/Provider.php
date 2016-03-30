@@ -3,13 +3,18 @@
 namespace SocialiteProviders\LinkedIn;
 
 use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
-use Laravel\Socialite\Two\User;
+use SocialiteProviders\Manager\OAuth2\AbstractProvider;
+use SocialiteProviders\Manager\OAuth2\User;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Provider extends AbstractProvider implements ProviderInterface
 {
+    /**
+     * Unique Provider Identifier.
+     */
+    const IDENTIFIER = 'LINKEDIN';
+
     /**
      * {@inheritdoc}
      */
@@ -18,7 +23,8 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * Get the GET parameters for the code request.
      *
-     * @param  string|null  $state
+     * @param string|null $state
+     *
      * @return array
      */
     protected function getCodeFields($state = null)
@@ -121,7 +127,7 @@ class Provider extends AbstractProvider implements ProviderInterface
 
         return $this->parseAccessToken($response->getBody());
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -130,7 +136,7 @@ class Provider extends AbstractProvider implements ProviderInterface
         return [
             'client_id' => $this->clientId, 'client_secret' => $this->clientSecret,
             'code' => $code, 'redirect_uri' => $this->redirectUrl,
-            'grant_type' => 'authorization_code'
+            'grant_type' => 'authorization_code',
         ];
     }
 }
