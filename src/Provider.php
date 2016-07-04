@@ -93,7 +93,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function getUserByToken($token)
     {
         $response = $this->getHttpClient()->get(
-            'https://api.linkedin.com/v1/people/~:(id,formatted-name,picture-url,email-address)', [
+            'https://api.linkedin.com/v1/people/~:(id,formatted-name,picture-url,email-address,public-profile-url)', [
             'headers' => [
                 'Accept-Language' => 'en-US',
                 'x-li-format' => 'json',
@@ -113,6 +113,7 @@ class Provider extends AbstractProvider implements ProviderInterface
             'id' => $user['id'], 'nickname' => null,
             'name' => $user['formattedName'], 'email' => $user['emailAddress'],
             'avatar' => array_get($user, 'pictureUrl'),
+            'profileUrl' => array_get($user, 'publicProfileUrl'),
         ]);
     }
 
